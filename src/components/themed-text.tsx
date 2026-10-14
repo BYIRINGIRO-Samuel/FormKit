@@ -4,7 +4,18 @@ import { Fonts, ThemeColor } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 export type ThemedTextProps = TextProps & {
-  type?: 'default' | 'title' | 'small' | 'smallBold' | 'subtitle' | 'link' | 'linkPrimary' | 'code';
+  type?:
+    | 'default'
+    | 'defaultSemiBold'
+    | 'title'
+    | 'hero'
+    | 'small'
+    | 'smallBold'
+    | 'subtitle'
+    | 'link'
+    | 'linkPrimary'
+    | 'code'
+    | 'caption';
   themeColor?: ThemeColor;
 };
 
@@ -16,13 +27,16 @@ export function ThemedText({ style, type = 'default', themeColor, ...rest }: The
       style={[
         { color: theme[themeColor ?? 'text'] },
         type === 'default' && styles.default,
+        type === 'defaultSemiBold' && styles.defaultSemiBold,
         type === 'title' && styles.title,
+        type === 'hero' && styles.hero,
         type === 'small' && styles.small,
         type === 'smallBold' && styles.smallBold,
         type === 'subtitle' && styles.subtitle,
         type === 'link' && styles.link,
         type === 'linkPrimary' && styles.linkPrimary,
         type === 'code' && styles.code,
+        type === 'caption' && styles.caption,
         style,
       ]}
       {...rest}
@@ -30,44 +44,79 @@ export function ThemedText({ style, type = 'default', themeColor, ...rest }: The
   );
 }
 
+const fontPlatform = (fontName: string) =>
+  Platform.select({
+    web: { fontFamily: "'Outfit', sans-serif" },
+    default: { fontFamily: fontName },
+  });
+
 const styles = StyleSheet.create({
-  small: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: 500,
-  },
-  smallBold: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: 700,
-  },
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: 500,
+  hero: {
+    ...fontPlatform(Fonts.bold),
+    fontSize: 40,
+    lineHeight: 46,
+    fontWeight: '700',
+    letterSpacing: -0.5,
   },
   title: {
-    fontSize: 48,
-    fontWeight: 600,
-    lineHeight: 52,
+    ...fontPlatform(Fonts.bold),
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: '700',
+    letterSpacing: -0.3,
   },
   subtitle: {
-    fontSize: 32,
-    lineHeight: 44,
-    fontWeight: 600,
+    ...fontPlatform(Fonts.semiBold),
+    fontSize: 20,
+    lineHeight: 26,
+    fontWeight: '600',
+  },
+  defaultSemiBold: {
+    ...fontPlatform(Fonts.semiBold),
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '600',
+  },
+  default: {
+    ...fontPlatform(Fonts.regular),
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: '400',
+  },
+  small: {
+    ...fontPlatform(Fonts.regular),
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '400',
+  },
+  smallBold: {
+    ...fontPlatform(Fonts.semiBold),
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '600',
+  },
+  caption: {
+    ...fontPlatform(Fonts.medium),
+    fontSize: 11,
+    lineHeight: 15,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
   },
   link: {
-    lineHeight: 30,
+    ...fontPlatform(Fonts.medium),
     fontSize: 14,
+    lineHeight: 20,
+    textDecorationLine: 'underline',
   },
   linkPrimary: {
-    lineHeight: 30,
+    ...fontPlatform(Fonts.semiBold),
     fontSize: 14,
-    color: '#3c87f7',
+    lineHeight: 20,
+    color: '#1E40AF',
   },
   code: {
     fontFamily: Fonts.mono,
-    fontWeight: Platform.select({ android: 700 }) ?? 500,
     fontSize: 12,
+    lineHeight: 16,
   },
 });

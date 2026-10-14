@@ -1,55 +1,97 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
 import '@/global.css';
 
 import { Platform } from 'react-native';
 
+export const BorderRadius = 3; // Strict 3px border radius specification
+
+export const NavyPalette = {
+  // Base colors
+  baseWhite: '#FFFFFF',
+  white: '#FFFFFF',
+  surfaceLight: '#F8FAFC',
+  surfaceSubtle: '#F1F5F9',
+  
+  // Navy Palette
+  navyDeep: '#0A192F',
+  deepNavy: '#0A192F',
+  navyPrimary: '#0F2444',
+  richNavy: '#0F2444',
+  navyCard: '#FFFFFF',
+  navyAccent: '#1D4ED8',
+  navyAccentBright: '#2563EB',
+  navyBorder: '#E2E8F0',
+  navyBorderActive: '#0A192F',
+  navyBorderSubtle: '#EDF2F7',
+  iceBlue: '#E2EEFC',
+  glowBlue: '#38BDF8',
+
+  // Typography Colors
+  textNavy: '#0A192F',
+  textSecondary: '#475569',
+  textMuted: '#94A3B8',
+  textMutedLight: '#94A3B8',
+  textWhite: '#FFFFFF',
+
+  // Status colors with 3px compatibility
+  success: '#10B981',
+  error: '#EF4444',
+  warning: '#F59E0B',
+} as const;
+
 export const Colors = {
   light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+    text: '#0A192F',
+    textSecondary: '#475569',
+    background: '#FFFFFF',
+    card: '#FFFFFF',
+    backgroundElement: '#F8FAFC',
+    backgroundSelected: '#E2E8F0',
+    border: '#E2E8F0',
+    primary: '#0A192F',
+    accent: '#1D4ED8',
+    tint: '#0A192F',
+    white: '#FFFFFF',
   },
   dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+    text: '#0A192F',
+    textSecondary: '#475569',
+    background: '#FFFFFF',
+    card: '#FFFFFF',
+    backgroundElement: '#F8FAFC',
+    backgroundSelected: '#E2E8F0',
+    border: '#E2E8F0',
+    primary: '#0A192F',
+    accent: '#1D4ED8',
+    tint: '#0A192F',
+    white: '#FFFFFF',
   },
 } as const;
 
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
+export type ThemeColor = keyof typeof Colors.light;
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
+export const Fonts = {
+  light: 'Outfit_300Light',
+  regular: 'Outfit_400Regular',
+  medium: 'Outfit_500Medium',
+  semiBold: 'Outfit_600SemiBold',
+  bold: 'Outfit_700Bold',
+  extraBold: 'Outfit_800ExtraBold',
+  black: 'Outfit_900Black',
+  display: Platform.select({
+    web: "'Outfit', -apple-system, BlinkMacSystemFont, sans-serif",
+    default: 'Outfit_600SemiBold',
+  }),
+  body: Platform.select({
+    web: "'Outfit', -apple-system, BlinkMacSystemFont, sans-serif",
+    default: 'Outfit_400Regular',
+  }),
+  mono: Platform.select({
+    ios: 'ui-monospace',
+    android: 'monospace',
+    web: 'var(--font-mono, monospace)',
+    default: 'monospace',
+  }),
+};
 
 export const Spacing = {
   half: 2,
@@ -61,5 +103,4 @@ export const Spacing = {
   six: 64,
 } as const;
 
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
-export const MaxContentWidth = 800;
+export const MaxContentWidth = 760;
