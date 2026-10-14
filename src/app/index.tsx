@@ -413,7 +413,7 @@ export default function SinglePageFormApp() {
   const [stepperVal, setStepperVal] = useState(4);
   const [textareaVal, setTextareaVal] = useState('');
 
-  // Real Interactive Dates & Times (Default formatted ISO strings)
+  // Real Interactive Dates & Times
   const [dateVal, setDateVal] = useState('2026-11-20');
   const [timeVal, setTimeVal] = useState('14:30');
   const [datetimeVal, setDatetimeVal] = useState('2026-11-20T14:30');
@@ -662,7 +662,7 @@ export default function SinglePageFormApp() {
         meta: {
           timestamp: new Date().toISOString(),
           formattedTime: new Date().toLocaleString(),
-          palette: 'White Base (#FFFFFF) with Navy Blue (#0A192F)',
+          palette: 'Navy Blue (#0A192F)',
           font: 'Outfit',
           borderRadius: '3px',
         },
@@ -805,14 +805,14 @@ ${JSON.stringify(payload, null, 2)}
         showsVerticalScrollIndicator={false}>
         <SafeAreaView edges={['left', 'right']} style={styles.safeContainer}>
           {/* ================================================================= */}
-          {/* SMALL CLEAN HEADER & COMPACT ACTIONS (NO TABS, PURE FORM FLOW)   */}
+          {/* SMALL CLEAN HEADER (ONE PER LINE FLOW, CLEAN SUBTITLE)            */}
           {/* ================================================================= */}
           <View style={styles.compactHeaderCard}>
             <View style={styles.headerTopRow}>
               <View style={styles.titleWrap}>
                 <Text style={styles.smallCleanTitle}>Form Elements</Text>
                 <Text style={styles.microSubtitle}>
-                  Standard HTML & React Native controls • White canvas • 3px radius
+                  Standard HTML & React Native controls
                 </Text>
               </View>
 
@@ -838,759 +838,748 @@ ${JSON.stringify(payload, null, 2)}
           </View>
 
           {/* ================================================================= */}
-          {/* SECTION 1: TEXT, AUTH & IDENTITY CONTROLS                         */}
+          {/* SECTION 1: TEXT, AUTH & IDENTITY CONTROLS (ONE PER LINE)          */}
           {/* ================================================================= */}
           <View style={styles.fieldsetCard}>
             <Text style={styles.fieldsetSmallHeading}>Text, Auth & Search Controls</Text>
 
-            {/* Paired Row 1: Name + Email */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Name <Text style={styles.star}>*</Text></Text>
-                  <CodeBtn id="text" />
-                </View>
-                <View style={[styles.compactInputBox, errors.text ? styles.inputError : null]}>
-                  <Feather name="user" size={14} color={NavyPalette.textNavy} />
-                  <TextInput
-                    style={styles.compactTextInput}
-                    placeholder="Eleanor Vance"
-                    placeholderTextColor={NavyPalette.textMuted}
-                    value={textVal}
-                    onChangeText={(t) => {
-                      setTextVal(t);
-                      if (errors.text) setErrors({ ...errors, text: '' });
-                    }}
-                  />
-                </View>
-                {errors.text ? <Text style={styles.errSm}>{errors.text}</Text> : null}
+            {/* Field: Full Name */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Name <Text style={styles.star}>*</Text></Text>
+                <CodeBtn id="text" />
               </View>
+              <View style={[styles.compactInputBox, errors.text ? styles.inputError : null]}>
+                <Feather name="user" size={14} color={NavyPalette.textNavy} />
+                <TextInput
+                  style={styles.compactTextInput}
+                  placeholder="Eleanor Vance"
+                  placeholderTextColor={NavyPalette.textMuted}
+                  value={textVal}
+                  onChangeText={(t) => {
+                    setTextVal(t);
+                    if (errors.text) setErrors({ ...errors, text: '' });
+                  }}
+                />
+              </View>
+              {errors.text ? <Text style={styles.errSm}>{errors.text}</Text> : null}
+            </View>
 
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Email <Text style={styles.star}>*</Text></Text>
-                  <CodeBtn id="email" />
-                </View>
-                <View style={[styles.compactInputBox, errors.email ? styles.inputError : null]}>
-                  <Feather name="mail" size={14} color={NavyPalette.textNavy} />
+            {/* Field: Email Address */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Email <Text style={styles.star}>*</Text></Text>
+                <CodeBtn id="email" />
+              </View>
+              <View style={[styles.compactInputBox, errors.email ? styles.inputError : null]}>
+                <Feather name="mail" size={14} color={NavyPalette.textNavy} />
+                <TextInput
+                  style={styles.compactTextInput}
+                  placeholder="eleanor@horizon.io"
+                  placeholderTextColor={NavyPalette.textMuted}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  value={emailVal}
+                  onChangeText={(t) => {
+                    setEmailVal(t);
+                    if (errors.email) setErrors({ ...errors, email: '' });
+                  }}
+                />
+              </View>
+              {errors.email ? <Text style={styles.errSm}>{errors.email}</Text> : null}
+            </View>
+
+            {/* Field: Password */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Password <Text style={styles.star}>*</Text></Text>
+                <CodeBtn id="password" />
+              </View>
+              <View style={[styles.compactInputBox, errors.password ? styles.inputError : null]}>
+                <Feather name="lock" size={14} color={NavyPalette.textNavy} />
+                <TextInput
+                  style={styles.compactTextInput}
+                  placeholder="Min 6 chars"
+                  placeholderTextColor={NavyPalette.textMuted}
+                  secureTextEntry={!showPassword}
+                  value={passwordVal}
+                  onChangeText={(t) => {
+                    setPasswordVal(t);
+                    if (errors.password) setErrors({ ...errors, password: '' });
+                  }}
+                />
+                <Pressable onPress={() => setShowPassword(!showPassword)}>
+                  <Feather name={showPassword ? 'eye-off' : 'eye'} size={14} color={NavyPalette.textSecondary} />
+                </Pressable>
+              </View>
+              {errors.password ? <Text style={styles.errSm}>{errors.password}</Text> : null}
+            </View>
+
+            {/* Field: 6-Digit OTP */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>6-Digit OTP</Text>
+                <CodeBtn id="otp" />
+              </View>
+              <View style={styles.otpRowFull}>
+                {otpDigits.map((d, i) => (
                   <TextInput
-                    style={styles.compactTextInput}
-                    placeholder="eleanor@horizon.io"
-                    placeholderTextColor={NavyPalette.textMuted}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    value={emailVal}
-                    onChangeText={(t) => {
-                      setEmailVal(t);
-                      if (errors.email) setErrors({ ...errors, email: '' });
+                    key={i}
+                    style={styles.otpCellOneLine}
+                    maxLength={1}
+                    keyboardType="number-pad"
+                    value={d}
+                    onChangeText={(v) => {
+                      const next = [...otpDigits];
+                      next[i] = v.slice(-1);
+                      setOtpDigits(next);
                     }}
                   />
-                </View>
-                {errors.email ? <Text style={styles.errSm}>{errors.email}</Text> : null}
+                ))}
               </View>
             </View>
 
-            {/* Paired Row 2: Password + 6-digit OTP */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Password <Text style={styles.star}>*</Text></Text>
-                  <CodeBtn id="password" />
-                </View>
-                <View style={[styles.compactInputBox, errors.password ? styles.inputError : null]}>
-                  <Feather name="lock" size={14} color={NavyPalette.textNavy} />
-                  <TextInput
-                    style={styles.compactTextInput}
-                    placeholder="Min 6 chars"
-                    placeholderTextColor={NavyPalette.textMuted}
-                    secureTextEntry={!showPassword}
-                    value={passwordVal}
-                    onChangeText={(t) => {
-                      setPasswordVal(t);
-                      if (errors.password) setErrors({ ...errors, password: '' });
-                    }}
-                  />
-                  <Pressable onPress={() => setShowPassword(!showPassword)}>
-                    <Feather name={showPassword ? 'eye-off' : 'eye'} size={14} color={NavyPalette.textSecondary} />
+            {/* Field: Telephone */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Telephone <Text style={styles.star}>*</Text></Text>
+                <CodeBtn id="tel" />
+              </View>
+              <View style={[styles.compactInputBox, errors.phone ? styles.inputError : null]}>
+                <Text style={styles.flagText}>+1</Text>
+                <TextInput
+                  style={styles.compactTextInput}
+                  placeholder="555-019-2834"
+                  placeholderTextColor={NavyPalette.textMuted}
+                  keyboardType="phone-pad"
+                  value={phoneVal}
+                  onChangeText={(t) => {
+                    setPhoneVal(t);
+                    if (errors.phone) setErrors({ ...errors, phone: '' });
+                  }}
+                />
+              </View>
+              {errors.phone ? <Text style={styles.errSm}>{errors.phone}</Text> : null}
+            </View>
+
+            {/* Field: Website URL */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Website URL <Text style={styles.star}>*</Text></Text>
+                <CodeBtn id="url" />
+              </View>
+              <View style={[styles.compactInputBox, errors.url ? styles.inputError : null]}>
+                <Feather name="globe" size={14} color={NavyPalette.textNavy} />
+                <TextInput
+                  style={styles.compactTextInput}
+                  placeholder="https://horizon.io"
+                  placeholderTextColor={NavyPalette.textMuted}
+                  keyboardType="url"
+                  autoCapitalize="none"
+                  value={urlVal}
+                  onChangeText={(t) => {
+                    setUrlVal(t);
+                    if (errors.url) setErrors({ ...errors, url: '' });
+                  }}
+                />
+              </View>
+              {errors.url ? <Text style={styles.errSm}>{errors.url}</Text> : null}
+            </View>
+
+            {/* Field: Search Input */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Search Input</Text>
+                <CodeBtn id="search" />
+              </View>
+              <View style={styles.compactInputBox}>
+                <Feather name="search" size={14} color={NavyPalette.textNavy} />
+                <TextInput
+                  style={styles.compactTextInput}
+                  placeholder="Query..."
+                  placeholderTextColor={NavyPalette.textMuted}
+                  returnKeyType="search"
+                  value={searchVal}
+                  onChangeText={setSearchVal}
+                />
+                {searchVal.length > 0 && (
+                  <Pressable onPress={() => setSearchVal('')}>
+                    <Feather name="x-circle" size={13} color={NavyPalette.textMuted} />
                   </Pressable>
-                </View>
-                {errors.password ? <Text style={styles.errSm}>{errors.password}</Text> : null}
-              </View>
-
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>6-Digit OTP</Text>
-                  <CodeBtn id="otp" />
-                </View>
-                <View style={styles.otpCompactRow}>
-                  {otpDigits.map((d, i) => (
-                    <TextInput
-                      key={i}
-                      style={styles.otpMiniCell}
-                      maxLength={1}
-                      keyboardType="number-pad"
-                      value={d}
-                      onChangeText={(v) => {
-                        const next = [...otpDigits];
-                        next[i] = v.slice(-1);
-                        setOtpDigits(next);
-                      }}
-                    />
-                  ))}
-                </View>
-              </View>
-            </View>
-
-            {/* Paired Row 3: Phone + URL */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Telephone <Text style={styles.star}>*</Text></Text>
-                  <CodeBtn id="tel" />
-                </View>
-                <View style={[styles.compactInputBox, errors.phone ? styles.inputError : null]}>
-                  <Text style={styles.flagText}>+1</Text>
-                  <TextInput
-                    style={styles.compactTextInput}
-                    placeholder="555-019-2834"
-                    placeholderTextColor={NavyPalette.textMuted}
-                    keyboardType="phone-pad"
-                    value={phoneVal}
-                    onChangeText={(t) => {
-                      setPhoneVal(t);
-                      if (errors.phone) setErrors({ ...errors, phone: '' });
-                    }}
-                  />
-                </View>
-                {errors.phone ? <Text style={styles.errSm}>{errors.phone}</Text> : null}
-              </View>
-
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Website URL <Text style={styles.star}>*</Text></Text>
-                  <CodeBtn id="url" />
-                </View>
-                <View style={[styles.compactInputBox, errors.url ? styles.inputError : null]}>
-                  <Feather name="globe" size={14} color={NavyPalette.textNavy} />
-                  <TextInput
-                    style={styles.compactTextInput}
-                    placeholder="https://horizon.io"
-                    placeholderTextColor={NavyPalette.textMuted}
-                    keyboardType="url"
-                    autoCapitalize="none"
-                    value={urlVal}
-                    onChangeText={(t) => {
-                      setUrlVal(t);
-                      if (errors.url) setErrors({ ...errors, url: '' });
-                    }}
-                  />
-                </View>
-                {errors.url ? <Text style={styles.errSm}>{errors.url}</Text> : null}
-              </View>
-            </View>
-
-            {/* Paired Row 4: Search + Datalist */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Search Input</Text>
-                  <CodeBtn id="search" />
-                </View>
-                <View style={styles.compactInputBox}>
-                  <Feather name="search" size={14} color={NavyPalette.textNavy} />
-                  <TextInput
-                    style={styles.compactTextInput}
-                    placeholder="Query..."
-                    placeholderTextColor={NavyPalette.textMuted}
-                    returnKeyType="search"
-                    value={searchVal}
-                    onChangeText={setSearchVal}
-                  />
-                  {searchVal.length > 0 && (
-                    <Pressable onPress={() => setSearchVal('')}>
-                      <Feather name="x-circle" size={13} color={NavyPalette.textMuted} />
-                    </Pressable>
-                  )}
-                </View>
-              </View>
-
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>&lt;datalist&gt; Autocomplete</Text>
-                  <CodeBtn id="datalist" />
-                </View>
-                <View style={styles.compactInputBox}>
-                  <Feather name="list" size={14} color={NavyPalette.textNavy} />
-                  <TextInput
-                    style={styles.compactTextInput}
-                    placeholder="Select / type..."
-                    placeholderTextColor={NavyPalette.textMuted}
-                    value={datalistVal}
-                    onChangeText={setDatalistVal}
-                    onFocus={() => setShowDatalistDropdown(true)}
-                  />
-                  <Pressable onPress={() => setShowDatalistDropdown(!showDatalistDropdown)}>
-                    <Feather name="chevron-down" size={14} color={NavyPalette.textNavy} />
-                  </Pressable>
-                </View>
-                {showDatalistDropdown && (
-                  <View style={styles.dropdownMiniList}>
-                    {DATALIST_SUGGESTIONS.map((item) => (
-                      <Pressable
-                        key={item}
-                        onPress={() => {
-                          setDatalistVal(item);
-                          setShowDatalistDropdown(false);
-                        }}
-                        style={styles.dropdownMiniRow}>
-                        <Text style={styles.dropdownMiniText}>{item}</Text>
-                      </Pressable>
-                    ))}
-                  </View>
                 )}
               </View>
             </View>
 
-            {/* Paired Row 5: Stepper + Textarea */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Numeric Stepper</Text>
-                  <CodeBtn id="number" />
-                </View>
-                <View style={styles.stepperCompact}>
-                  <Pressable
-                    onPress={() => setStepperVal(Math.max(1, stepperVal - 1))}
-                    style={styles.stepperBtnSm}>
-                    <Feather name="minus" size={14} color={NavyPalette.textNavy} />
-                  </Pressable>
-                  <View style={styles.stepperCenterSm}>
-                    <Text style={styles.stepperNumSm}>{stepperVal}</Text>
-                    <Text style={styles.stepperLabelSm}>ENGINEERS</Text>
-                  </View>
-                  <Pressable
-                    onPress={() => setStepperVal(Math.min(50, stepperVal + 1))}
-                    style={styles.stepperBtnSm}>
-                    <Feather name="plus" size={14} color={NavyPalette.textNavy} />
-                  </Pressable>
-                </View>
+            {/* Field: Datalist Autocomplete */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>&lt;datalist&gt; Autocomplete</Text>
+                <CodeBtn id="datalist" />
               </View>
+              <View style={styles.compactInputBox}>
+                <Feather name="list" size={14} color={NavyPalette.textNavy} />
+                <TextInput
+                  style={styles.compactTextInput}
+                  placeholder="Select / type..."
+                  placeholderTextColor={NavyPalette.textMuted}
+                  value={datalistVal}
+                  onChangeText={setDatalistVal}
+                  onFocus={() => setShowDatalistDropdown(true)}
+                />
+                <Pressable onPress={() => setShowDatalistDropdown(!showDatalistDropdown)}>
+                  <Feather name="chevron-down" size={14} color={NavyPalette.textNavy} />
+                </Pressable>
+              </View>
+              {showDatalistDropdown && (
+                <View style={styles.dropdownMiniList}>
+                  {DATALIST_SUGGESTIONS.map((item) => (
+                    <Pressable
+                      key={item}
+                      onPress={() => {
+                        setDatalistVal(item);
+                        setShowDatalistDropdown(false);
+                      }}
+                      style={styles.dropdownMiniRow}>
+                      <Text style={styles.dropdownMiniText}>{item}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+              )}
+            </View>
 
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Multiline Textarea <Text style={styles.star}>*</Text></Text>
-                  <CodeBtn id="textarea" />
+            {/* Field: Numeric Stepper */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Numeric Stepper</Text>
+                <CodeBtn id="number" />
+              </View>
+              <View style={styles.stepperCompact}>
+                <Pressable
+                  onPress={() => setStepperVal(Math.max(1, stepperVal - 1))}
+                  style={styles.stepperBtnSm}>
+                  <Feather name="minus" size={14} color={NavyPalette.textNavy} />
+                </Pressable>
+                <View style={styles.stepperCenterSm}>
+                  <Text style={styles.stepperNumSm}>{stepperVal}</Text>
+                  <Text style={styles.stepperLabelSm}>ENGINEERS</Text>
                 </View>
-                <View style={[styles.textareaMiniBox, errors.textarea ? styles.inputError : null]}>
-                  <TextInput
-                    style={styles.textareaMiniInput}
-                    placeholder="Project deliverables & scope..."
-                    placeholderTextColor={NavyPalette.textMuted}
-                    multiline
-                    numberOfLines={2}
-                    maxLength={300}
-                    value={textareaVal}
-                    onChangeText={(t) => {
-                      setTextareaVal(t);
-                      if (errors.textarea) setErrors({ ...errors, textarea: '' });
-                    }}
-                  />
-                </View>
-                {errors.textarea ? <Text style={styles.errSm}>{errors.textarea}</Text> : null}
+                <Pressable
+                  onPress={() => setStepperVal(Math.min(50, stepperVal + 1))}
+                  style={styles.stepperBtnSm}>
+                  <Feather name="plus" size={14} color={NavyPalette.textNavy} />
+                </Pressable>
               </View>
             </View>
 
-            {/* Paired Row 6: Read-Only + Disabled Controls */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Read-Only &lt;input readonly&gt;</Text>
-                  <CodeBtn id="readonly" />
-                </View>
-                <View style={[styles.compactInputBox, styles.inputBoxReadOnly]}>
-                  <Feather name="lock" size={13} color={NavyPalette.textSecondary} />
-                  <TextInput
-                    style={styles.compactTextInput}
-                    value="SYS-REF-2026-X8"
-                    editable={false}
-                    selectTextOnFocus
-                  />
-                  <Text style={styles.badgeRo}>READ-ONLY</Text>
-                </View>
+            {/* Field: Multiline Textarea */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Multiline Textarea <Text style={styles.star}>*</Text></Text>
+                <CodeBtn id="textarea" />
               </View>
+              <View style={[styles.textareaMiniBox, errors.textarea ? styles.inputError : null]}>
+                <TextInput
+                  style={styles.textareaMiniInput}
+                  placeholder="Project deliverables & scope..."
+                  placeholderTextColor={NavyPalette.textMuted}
+                  multiline
+                  numberOfLines={3}
+                  maxLength={300}
+                  value={textareaVal}
+                  onChangeText={(t) => {
+                    setTextareaVal(t);
+                    if (errors.textarea) setErrors({ ...errors, textarea: '' });
+                  }}
+                />
+              </View>
+              {errors.textarea ? <Text style={styles.errSm}>{errors.textarea}</Text> : null}
+            </View>
 
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Disabled &lt;input disabled&gt;</Text>
-                  <CodeBtn id="disabled" />
-                </View>
-                <View style={[styles.compactInputBox, styles.inputBoxDisabled]}>
-                  <Feather name="slash" size={13} color={NavyPalette.textMuted} />
-                  <TextInput
-                    style={[styles.compactTextInput, { color: NavyPalette.textMuted }]}
-                    value="System Managed (Inactive)"
-                    editable={false}
-                  />
-                  <Text style={styles.badgeDisabled}>DISABLED</Text>
-                </View>
+            {/* Field: Read-Only Input */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Read-Only &lt;input readonly&gt;</Text>
+                <CodeBtn id="readonly" />
+              </View>
+              <View style={[styles.compactInputBox, styles.inputBoxReadOnly]}>
+                <Feather name="lock" size={13} color={NavyPalette.textSecondary} />
+                <TextInput
+                  style={styles.compactTextInput}
+                  value="SYS-REF-2026-X8"
+                  editable={false}
+                  selectTextOnFocus
+                />
+                <Text style={styles.badgeRo}>READ-ONLY</Text>
+              </View>
+            </View>
+
+            {/* Field: Disabled Input */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Disabled &lt;input disabled&gt;</Text>
+                <CodeBtn id="disabled" />
+              </View>
+              <View style={[styles.compactInputBox, styles.inputBoxDisabled]}>
+                <Feather name="slash" size={13} color={NavyPalette.textMuted} />
+                <TextInput
+                  style={[styles.compactTextInput, { color: NavyPalette.textMuted }]}
+                  value="System Managed (Inactive)"
+                  editable={false}
+                />
+                <Text style={styles.badgeDisabled}>DISABLED</Text>
               </View>
             </View>
           </View>
 
           {/* ================================================================= */}
-          {/* SECTION 2: DATES & TIMES (NATIVE INTERACTIVE PICKERS)             */}
+          {/* SECTION 2: DATES & TIMES (ONE PER LINE)                           */}
           {/* ================================================================= */}
           <View style={styles.fieldsetCard}>
             <Text style={styles.fieldsetSmallHeading}>Date & Time Pickers</Text>
 
-            {/* Interactive Date & Time Paired */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Date Picker</Text>
-                  <CodeBtn id="date" />
-                </View>
-                <View style={styles.compactInputBox}>
-                  <Feather name="calendar" size={14} color={NavyPalette.textNavy} />
-                  {Platform.OS === 'web' ? (
-                    React.createElement('input', {
-                      type: 'date',
-                      value: dateVal,
-                      onChange: (e: any) => setDateVal(e.target.value),
-                      style: {
-                        flex: 1,
-                        border: 'none',
-                        outline: 'none',
-                        backgroundColor: 'transparent',
-                        fontFamily: 'Outfit, sans-serif',
-                        fontSize: 13,
-                        color: NavyPalette.textNavy,
-                        cursor: 'pointer',
-                      },
-                    })
-                  ) : (
-                    <TextInput
-                      style={styles.compactTextInput}
-                      value={dateVal}
-                      onChangeText={setDateVal}
-                      placeholder="YYYY-MM-DD"
-                    />
-                  )}
-                </View>
+            {/* Field: Date Picker */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Date Picker</Text>
+                <CodeBtn id="date" />
               </View>
-
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Time Picker</Text>
-                  <CodeBtn id="time" />
-                </View>
-                <View style={styles.compactInputBox}>
-                  <Feather name="clock" size={14} color={NavyPalette.textNavy} />
-                  {Platform.OS === 'web' ? (
-                    React.createElement('input', {
-                      type: 'time',
-                      value: timeVal,
-                      onChange: (e: any) => setTimeVal(e.target.value),
-                      style: {
-                        flex: 1,
-                        border: 'none',
-                        outline: 'none',
-                        backgroundColor: 'transparent',
-                        fontFamily: 'Outfit, sans-serif',
-                        fontSize: 13,
-                        color: NavyPalette.textNavy,
-                        cursor: 'pointer',
-                      },
-                    })
-                  ) : (
-                    <TextInput
-                      style={styles.compactTextInput}
-                      value={timeVal}
-                      onChangeText={setTimeVal}
-                      placeholder="HH:MM"
-                    />
-                  )}
-                </View>
+              <View style={styles.compactInputBox}>
+                <Feather name="calendar" size={14} color={NavyPalette.textNavy} />
+                {Platform.OS === 'web' ? (
+                  React.createElement('input', {
+                    type: 'date',
+                    value: dateVal,
+                    onChange: (e: any) => setDateVal(e.target.value),
+                    style: {
+                      flex: 1,
+                      border: 'none',
+                      outline: 'none',
+                      backgroundColor: 'transparent',
+                      fontFamily: 'Outfit, sans-serif',
+                      fontSize: 13,
+                      color: NavyPalette.textNavy,
+                      cursor: 'pointer',
+                    },
+                  })
+                ) : (
+                  <TextInput
+                    style={styles.compactTextInput}
+                    value={dateVal}
+                    onChangeText={setDateVal}
+                    placeholder="YYYY-MM-DD"
+                  />
+                )}
               </View>
             </View>
 
-            {/* Interactive Datetime-Local + Month + Week (3-in-1 Compact Row) */}
-            <View style={styles.threeWayRow}>
-              <View style={styles.thirdField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>datetime-local</Text>
-                  <CodeBtn id="datetime" />
-                </View>
-                <View style={styles.compactInputBox}>
-                  {Platform.OS === 'web' ? (
-                    React.createElement('input', {
-                      type: 'datetime-local',
-                      value: datetimeVal,
-                      onChange: (e: any) => setDatetimeVal(e.target.value),
-                      style: {
-                        flex: 1,
-                        border: 'none',
-                        outline: 'none',
-                        backgroundColor: 'transparent',
-                        fontFamily: 'Outfit, sans-serif',
-                        fontSize: 12,
-                        color: NavyPalette.textNavy,
-                        cursor: 'pointer',
-                      },
-                    })
-                  ) : (
-                    <Text style={styles.compactDisplayTxtSm}>{datetimeVal}</Text>
-                  )}
-                </View>
+            {/* Field: Time Picker */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Time Picker</Text>
+                <CodeBtn id="time" />
               </View>
-
-              <View style={styles.thirdField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Month</Text>
-                  <CodeBtn id="month" />
-                </View>
-                <View style={styles.compactInputBox}>
-                  {Platform.OS === 'web' ? (
-                    React.createElement('input', {
-                      type: 'month',
-                      value: monthVal,
-                      onChange: (e: any) => setMonthVal(e.target.value),
-                      style: {
-                        flex: 1,
-                        border: 'none',
-                        outline: 'none',
-                        backgroundColor: 'transparent',
-                        fontFamily: 'Outfit, sans-serif',
-                        fontSize: 12,
-                        color: NavyPalette.textNavy,
-                        cursor: 'pointer',
-                      },
-                    })
-                  ) : (
-                    <Text style={styles.compactDisplayTxtSm}>{monthVal}</Text>
-                  )}
-                </View>
+              <View style={styles.compactInputBox}>
+                <Feather name="clock" size={14} color={NavyPalette.textNavy} />
+                {Platform.OS === 'web' ? (
+                  React.createElement('input', {
+                    type: 'time',
+                    value: timeVal,
+                    onChange: (e: any) => setTimeVal(e.target.value),
+                    style: {
+                      flex: 1,
+                      border: 'none',
+                      outline: 'none',
+                      backgroundColor: 'transparent',
+                      fontFamily: 'Outfit, sans-serif',
+                      fontSize: 13,
+                      color: NavyPalette.textNavy,
+                      cursor: 'pointer',
+                    },
+                  })
+                ) : (
+                  <TextInput
+                    style={styles.compactTextInput}
+                    value={timeVal}
+                    onChangeText={setTimeVal}
+                    placeholder="HH:MM"
+                  />
+                )}
               </View>
+            </View>
 
-              <View style={styles.thirdField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Week</Text>
-                  <CodeBtn id="week" />
-                </View>
-                <View style={styles.compactInputBox}>
-                  {Platform.OS === 'web' ? (
-                    React.createElement('input', {
-                      type: 'week',
-                      value: weekVal,
-                      onChange: (e: any) => setWeekVal(e.target.value),
-                      style: {
-                        flex: 1,
-                        border: 'none',
-                        outline: 'none',
-                        backgroundColor: 'transparent',
-                        fontFamily: 'Outfit, sans-serif',
-                        fontSize: 12,
-                        color: NavyPalette.textNavy,
-                        cursor: 'pointer',
-                      },
-                    })
-                  ) : (
-                    <Text style={styles.compactDisplayTxtSm}>{weekVal}</Text>
-                  )}
-                </View>
+            {/* Field: datetime-local */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>datetime-local</Text>
+                <CodeBtn id="datetime" />
+              </View>
+              <View style={styles.compactInputBox}>
+                {Platform.OS === 'web' ? (
+                  React.createElement('input', {
+                    type: 'datetime-local',
+                    value: datetimeVal,
+                    onChange: (e: any) => setDatetimeVal(e.target.value),
+                    style: {
+                      flex: 1,
+                      border: 'none',
+                      outline: 'none',
+                      backgroundColor: 'transparent',
+                      fontFamily: 'Outfit, sans-serif',
+                      fontSize: 13,
+                      color: NavyPalette.textNavy,
+                      cursor: 'pointer',
+                    },
+                  })
+                ) : (
+                  <Text style={styles.compactDisplayTxtSm}>{datetimeVal}</Text>
+                )}
+              </View>
+            </View>
+
+            {/* Field: Month */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Month Picker</Text>
+                <CodeBtn id="month" />
+              </View>
+              <View style={styles.compactInputBox}>
+                {Platform.OS === 'web' ? (
+                  React.createElement('input', {
+                    type: 'month',
+                    value: monthVal,
+                    onChange: (e: any) => setMonthVal(e.target.value),
+                    style: {
+                      flex: 1,
+                      border: 'none',
+                      outline: 'none',
+                      backgroundColor: 'transparent',
+                      fontFamily: 'Outfit, sans-serif',
+                      fontSize: 13,
+                      color: NavyPalette.textNavy,
+                      cursor: 'pointer',
+                    },
+                  })
+                ) : (
+                  <Text style={styles.compactDisplayTxtSm}>{monthVal}</Text>
+                )}
+              </View>
+            </View>
+
+            {/* Field: Week */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Week Picker</Text>
+                <CodeBtn id="week" />
+              </View>
+              <View style={styles.compactInputBox}>
+                {Platform.OS === 'web' ? (
+                  React.createElement('input', {
+                    type: 'week',
+                    value: weekVal,
+                    onChange: (e: any) => setWeekVal(e.target.value),
+                    style: {
+                      flex: 1,
+                      border: 'none',
+                      outline: 'none',
+                      backgroundColor: 'transparent',
+                      fontFamily: 'Outfit, sans-serif',
+                      fontSize: 13,
+                      color: NavyPalette.textNavy,
+                      cursor: 'pointer',
+                    },
+                  })
+                ) : (
+                  <Text style={styles.compactDisplayTxtSm}>{weekVal}</Text>
+                )}
               </View>
             </View>
           </View>
 
           {/* ================================================================= */}
-          {/* SECTION 3: CHOICES, MENUS & TOGGLES                               */}
+          {/* SECTION 3: CHOICES, MENUS & TOGGLES (ONE PER LINE)                */}
           {/* ================================================================= */}
           <View style={styles.fieldsetCard}>
             <Text style={styles.fieldsetSmallHeading}>Choices, Menus & Booleans</Text>
 
-            {/* Dropdown Select + Multi-Select */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Single-Select (Optgroup)</Text>
-                  <CodeBtn id="select" />
+            {/* Field: Dropdown Select with Optgroups */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Single-Select (Optgroup)</Text>
+                <CodeBtn id="select" />
+              </View>
+              <Pressable
+                onPress={() => setIsDropdownOpen(!isDropdownOpen)}
+                style={styles.compactInputBox}>
+                <Text style={styles.compactDisplayTxt} numberOfLines={1}>
+                  {selectedDiscipline}
+                </Text>
+                <Feather name="chevron-down" size={14} color={NavyPalette.textNavy} />
+              </Pressable>
+              {isDropdownOpen && (
+                <View style={styles.dropdownMiniList}>
+                  {CATEGORY_GROUPS.map((grp) => (
+                    <View key={grp.group}>
+                      <Text style={styles.optgroupMiniTitle}>{grp.group}</Text>
+                      {grp.options.map((opt) => (
+                        <Pressable
+                          key={opt}
+                          onPress={() => {
+                            setSelectedDiscipline(opt);
+                            setIsDropdownOpen(false);
+                          }}
+                          style={styles.dropdownMiniRow}>
+                          <Text style={styles.dropdownMiniText}>{opt}</Text>
+                          {opt === selectedDiscipline && (
+                            <Feather name="check" size={12} color={NavyPalette.navyDeep} />
+                          )}
+                        </Pressable>
+                      ))}
+                    </View>
+                  ))}
                 </View>
-                <Pressable
-                  onPress={() => setIsDropdownOpen(!isDropdownOpen)}
-                  style={styles.compactInputBox}>
-                  <Text style={styles.compactDisplayTxt} numberOfLines={1}>
-                    {selectedDiscipline}
-                  </Text>
-                  <Feather name="chevron-down" size={14} color={NavyPalette.textNavy} />
-                </Pressable>
-                {isDropdownOpen && (
-                  <View style={styles.dropdownMiniList}>
-                    {CATEGORY_GROUPS.map((grp) => (
-                      <View key={grp.group}>
-                        <Text style={styles.optgroupMiniTitle}>{grp.group}</Text>
-                        {grp.options.map((opt) => (
-                          <Pressable
-                            key={opt}
-                            onPress={() => {
-                              setSelectedDiscipline(opt);
-                              setIsDropdownOpen(false);
-                            }}
-                            style={styles.dropdownMiniRow}>
-                            <Text style={styles.dropdownMiniText}>{opt}</Text>
-                            {opt === selectedDiscipline && (
-                              <Feather name="check" size={12} color={NavyPalette.navyDeep} />
-                            )}
-                          </Pressable>
-                        ))}
+              )}
+            </View>
+
+            {/* Field: Multi-Select */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Multi-Select ({multiSelectSkills.length} selected)</Text>
+                <CodeBtn id="multiselect" />
+              </View>
+              <View style={styles.multiSelectPills}>
+                {MULTI_SKILLS_LIST.map((s) => {
+                  const isChecked = multiSelectSkills.includes(s);
+                  return (
+                    <Pressable
+                      key={s}
+                      onPress={() => toggleMultiSelect(s)}
+                      style={[styles.skillChip, isChecked && styles.skillChipActive]}>
+                      <Text style={[styles.skillChipTxt, isChecked && styles.skillChipTxtActive]}>
+                        {isChecked ? '✓ ' : ''}{s}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </View>
+
+            {/* Field: Radio Group */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Radio Group</Text>
+                <CodeBtn id="radio" />
+              </View>
+              <View style={styles.radioPillGroup}>
+                {RADIO_OPTIONS.map((opt) => {
+                  const isSel = opt.id === selectedRadio;
+                  return (
+                    <Pressable
+                      key={opt.id}
+                      onPress={() => setSelectedRadio(opt.id)}
+                      style={[styles.radioCompactPill, isSel && styles.radioCompactPillActive]}>
+                      <View style={styles.radioMiniDot}>
+                        {isSel && <View style={styles.radioMiniDotActive} />}
                       </View>
-                    ))}
-                  </View>
-                )}
-              </View>
-
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Multi-Select ({multiSelectSkills.length})</Text>
-                  <CodeBtn id="multiselect" />
-                </View>
-                <View style={styles.multiSelectPills}>
-                  {MULTI_SKILLS_LIST.map((s) => {
-                    const isChecked = multiSelectSkills.includes(s);
-                    return (
-                      <Pressable
-                        key={s}
-                        onPress={() => toggleMultiSelect(s)}
-                        style={[styles.skillChip, isChecked && styles.skillChipActive]}>
-                        <Text style={[styles.skillChipTxt, isChecked && styles.skillChipTxtActive]}>
-                          {isChecked ? '✓ ' : ''}{s.split(' ')[0]}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </View>
+                      <Text style={[styles.radioPillTxt, isSel && styles.radioPillTxtActive]}>
+                        {opt.label}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
               </View>
             </View>
 
-            {/* Radio Group + Segmented Control */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Radio Group</Text>
-                  <CodeBtn id="radio" />
-                </View>
-                <View style={styles.radioPillGroup}>
-                  {RADIO_OPTIONS.map((opt) => {
-                    const isSel = opt.id === selectedRadio;
-                    return (
-                      <Pressable
-                        key={opt.id}
-                        onPress={() => setSelectedRadio(opt.id)}
-                        style={[styles.radioCompactPill, isSel && styles.radioCompactPillActive]}>
-                        <View style={styles.radioMiniDot}>
-                          {isSel && <View style={styles.radioMiniDotActive} />}
-                        </View>
-                        <Text style={[styles.radioPillTxt, isSel && styles.radioPillTxtActive]}>
-                          {opt.label}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </View>
+            {/* Field: Segmented Control */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Segmented Control</Text>
+                <CodeBtn id="segmented" />
               </View>
-
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Segmented Control</Text>
-                  <CodeBtn id="segmented" />
-                </View>
-                <View style={styles.segmentedCompactWrap}>
-                  {SEGMENTED_OPTIONS.map((seg) => {
-                    const isSel = segmentVal === seg;
-                    return (
-                      <Pressable
-                        key={seg}
-                        onPress={() => setSegmentVal(seg)}
-                        style={[styles.segmentBtnSm, isSel && styles.segmentBtnSmActive]}>
-                        <Text style={[styles.segmentTxtSm, isSel && styles.segmentTxtSmActive]}>
-                          {seg}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </View>
+              <View style={styles.segmentedCompactWrap}>
+                {SEGMENTED_OPTIONS.map((seg) => {
+                  const isSel = segmentVal === seg;
+                  return (
+                    <Pressable
+                      key={seg}
+                      onPress={() => setSegmentVal(seg)}
+                      style={[styles.segmentBtnSm, isSel && styles.segmentBtnSmActive]}>
+                      <Text style={[styles.segmentTxtSm, isSel && styles.segmentTxtSmActive]}>
+                        {seg}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
               </View>
             </View>
 
-            {/* Checkbox + Switch (Side by Side in 1 Clean Card) */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Checkbox <Text style={styles.star}>*</Text></Text>
-                  <CodeBtn id="checkbox" />
-                </View>
-                <Pressable
-                  onPress={() => {
-                    setCheckboxVal(!checkboxVal);
-                    if (errors.checkbox) setErrors({ ...errors, checkbox: '' });
-                  }}
-                  style={styles.checkboxCompactRow}>
-                  <View style={[styles.checkboxSmBox, checkboxVal && styles.checkboxSmBoxActive]}>
-                    {checkboxVal && <Feather name="check" size={11} color={NavyPalette.baseWhite} />}
-                  </View>
-                  <Text style={styles.checkboxCompactTxt}>Accept Master Protocol</Text>
-                </Pressable>
-                {errors.checkbox ? <Text style={styles.errSm}>{errors.checkbox}</Text> : null}
+            {/* Field: Checkbox */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Checkbox <Text style={styles.star}>*</Text></Text>
+                <CodeBtn id="checkbox" />
               </View>
+              <Pressable
+                onPress={() => {
+                  setCheckboxVal(!checkboxVal);
+                  if (errors.checkbox) setErrors({ ...errors, checkbox: '' });
+                }}
+                style={styles.checkboxCompactRow}>
+                <View style={[styles.checkboxSmBox, checkboxVal && styles.checkboxSmBoxActive]}>
+                  {checkboxVal && <Feather name="check" size={11} color={NavyPalette.baseWhite} />}
+                </View>
+                <Text style={styles.checkboxCompactTxt}>Accept Master Protocol</Text>
+              </Pressable>
+              {errors.checkbox ? <Text style={styles.errSm}>{errors.checkbox}</Text> : null}
+            </View>
 
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Toggle Switch</Text>
-                  <CodeBtn id="switch" />
-                </View>
-                <View style={styles.switchCompactRow}>
-                  <Text style={styles.switchCompactTxt}>Push Notifications</Text>
-                  <Switch
-                    value={switchVal}
-                    onValueChange={setSwitchVal}
-                    trackColor={{ false: '#CBD5E1', true: NavyPalette.navyDeep }}
-                    thumbColor={NavyPalette.baseWhite}
-                  />
-                </View>
+            {/* Field: Toggle Switch */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Toggle Switch</Text>
+                <CodeBtn id="switch" />
+              </View>
+              <View style={styles.switchCompactRow}>
+                <Text style={styles.switchCompactTxt}>Push Notifications</Text>
+                <Switch
+                  value={switchVal}
+                  onValueChange={setSwitchVal}
+                  trackColor={{ false: '#CBD5E1', true: NavyPalette.navyDeep }}
+                  thumbColor={NavyPalette.baseWhite}
+                />
               </View>
             </View>
           </View>
 
           {/* ================================================================= */}
-          {/* SECTION 4: SLIDERS, METRICS & LIVE CALCULATIONS                   */}
+          {/* SECTION 4: SLIDERS, METRICS & LIVE CALCULATIONS (ONE PER LINE)    */}
           {/* ================================================================= */}
           <View style={styles.fieldsetCard}>
             <Text style={styles.fieldsetSmallHeading}>Range, Output, Meter & Colors</Text>
 
-            {/* Interactive Slider (Sliding) + Calculated <output> */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Range Slider: ${sliderVal}k</Text>
-                  <CodeBtn id="range" />
-                </View>
-                <View style={styles.sliderInteractiveRow}>
-                  {Platform.OS === 'web' ? (
-                    React.createElement('input', {
-                      type: 'range',
-                      min: '10',
-                      max: '150',
-                      step: '1',
-                      value: sliderVal,
-                      onChange: (e: any) => setSliderVal(Number(e.target.value)),
-                      style: {
-                        flex: 1,
-                        accentColor: NavyPalette.navyDeep,
-                        cursor: 'pointer',
-                        height: 6,
-                      },
-                    })
-                  ) : (
-                    <View style={styles.sliderBarSmBg}>
-                      <View style={[styles.sliderBarSmFill, { width: `${budgetMeterPercent}%` }]} />
-                    </View>
-                  )}
-                  <View style={styles.sliderLiveBadge}>
-                    <Text style={styles.sliderLiveBadgeTxt}>${sliderVal}k</Text>
+            {/* Field: Range Slider */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Range Slider: ${sliderVal}k</Text>
+                <CodeBtn id="range" />
+              </View>
+              <View style={styles.sliderInteractiveRow}>
+                {Platform.OS === 'web' ? (
+                  React.createElement('input', {
+                    type: 'range',
+                    min: '10',
+                    max: '150',
+                    step: '1',
+                    value: sliderVal,
+                    onChange: (e: any) => setSliderVal(Number(e.target.value)),
+                    style: {
+                      flex: 1,
+                      accentColor: NavyPalette.navyDeep,
+                      cursor: 'pointer',
+                      height: 6,
+                    },
+                  })
+                ) : (
+                  <View style={styles.sliderBarSmBg}>
+                    <View style={[styles.sliderBarSmFill, { width: `${budgetMeterPercent}%` }]} />
                   </View>
-                </View>
-              </View>
-
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>&lt;output&gt; Calculated</Text>
-                  <CodeBtn id="output" />
-                </View>
-                <View style={styles.outputBoxSm}>
-                  <Text style={styles.outputMiniFormula}>
-                    (${sliderVal}k) ÷ ({stepperVal} engineers)
-                  </Text>
-                  <Text style={styles.outputMiniValue}>
-                    ${calculatedCost.toLocaleString()} / mo / specialist
-                  </Text>
+                )}
+                <View style={styles.sliderLiveBadge}>
+                  <Text style={styles.sliderLiveBadgeTxt}>${sliderVal}k</Text>
                 </View>
               </View>
             </View>
 
-            {/* Meter + Star Rating + Interactive Color Picker */}
-            <View style={styles.threeWayRow}>
-              <View style={styles.thirdField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>&lt;meter&gt; Load</Text>
-                  <CodeBtn id="meter" />
-                </View>
-                <View style={styles.meterBarSmBg}>
-                  <View
-                    style={[
-                      styles.meterBarSmFill,
-                      { width: `${budgetMeterPercent}%` },
-                      budgetMeterPercent > 80 ? styles.meterHigh : styles.meterOpt,
-                    ]}
-                  />
-                </View>
-                <Text style={styles.meterMiniLabel}>{budgetMeterPercent}% Allocation</Text>
+            {/* Field: Calculated Output */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>&lt;output&gt; Calculated</Text>
+                <CodeBtn id="output" />
               </View>
-
-              <View style={styles.thirdField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Star Rating</Text>
-                  <CodeBtn id="rating" />
-                </View>
-                <View style={styles.starRowSm}>
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <Pressable key={s} onPress={() => setRatingVal(s)}>
-                      <Ionicons
-                        name={s <= ratingVal ? 'star' : 'star-outline'}
-                        size={18}
-                        color={s <= ratingVal ? NavyPalette.navyDeep : NavyPalette.navyBorder}
-                      />
-                    </Pressable>
-                  ))}
-                </View>
-              </View>
-
-              <View style={styles.thirdField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Color Picker</Text>
-                  <CodeBtn id="color" />
-                </View>
-                <View style={styles.colorPickerInteractiveRow}>
-                  {Platform.OS === 'web' ? (
-                    React.createElement('input', {
-                      type: 'color',
-                      value: selectedColor,
-                      onChange: (e: any) => setSelectedColor(e.target.value),
-                      style: {
-                        width: 28,
-                        height: 28,
-                        border: `1px solid ${NavyPalette.navyBorder}`,
-                        borderRadius: '3px',
-                        padding: 0,
-                        cursor: 'pointer',
-                        backgroundColor: 'transparent',
-                      },
-                    })
-                  ) : (
-                    <View style={[styles.colorMiniDot, { backgroundColor: selectedColor }]} />
-                  )}
-                  <TextInput
-                    style={styles.colorHexInput}
-                    value={selectedColor.toUpperCase()}
-                    onChangeText={(t) => {
-                      if (/^#[0-9A-Fa-f]{0,6}$/.test(t)) setSelectedColor(t);
-                    }}
-                    maxLength={7}
-                  />
-                </View>
+              <View style={styles.outputBoxSm}>
+                <Text style={styles.outputMiniFormula}>
+                  (${sliderVal}k) ÷ ({stepperVal} engineers)
+                </Text>
+                <Text style={styles.outputMiniValue}>
+                  ${calculatedCost.toLocaleString()} / mo / specialist
+                </Text>
               </View>
             </View>
 
-            {/* Dynamic Tag Chips */}
-            <View style={styles.fullWidthField}>
+            {/* Field: Capacity Meter */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>&lt;meter&gt; Load</Text>
+                <CodeBtn id="meter" />
+              </View>
+              <View style={styles.meterBarSmBg}>
+                <View
+                  style={[
+                    styles.meterBarSmFill,
+                    { width: `${budgetMeterPercent}%` },
+                    budgetMeterPercent > 80 ? styles.meterHigh : styles.meterOpt,
+                  ]}
+                />
+              </View>
+              <Text style={styles.meterMiniLabel}>{budgetMeterPercent}% Allocation</Text>
+            </View>
+
+            {/* Field: Star Rating */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Star Rating</Text>
+                <CodeBtn id="rating" />
+              </View>
+              <View style={styles.starRowSm}>
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <Pressable key={s} onPress={() => setRatingVal(s)}>
+                    <Ionicons
+                      name={s <= ratingVal ? 'star' : 'star-outline'}
+                      size={20}
+                      color={s <= ratingVal ? NavyPalette.navyDeep : NavyPalette.navyBorder}
+                    />
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+
+            {/* Field: Color Picker */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Color Picker</Text>
+                <CodeBtn id="color" />
+              </View>
+              <View style={styles.colorPickerInteractiveRow}>
+                {Platform.OS === 'web' ? (
+                  React.createElement('input', {
+                    type: 'color',
+                    value: selectedColor,
+                    onChange: (e: any) => setSelectedColor(e.target.value),
+                    style: {
+                      width: 38,
+                      height: 38,
+                      border: `1px solid ${NavyPalette.navyBorder}`,
+                      borderRadius: '3px',
+                      padding: 0,
+                      cursor: 'pointer',
+                      backgroundColor: 'transparent',
+                    },
+                  })
+                ) : (
+                  <View style={[styles.colorMiniDot, { backgroundColor: selectedColor }]} />
+                )}
+                <TextInput
+                  style={styles.colorHexInput}
+                  value={selectedColor.toUpperCase()}
+                  onChangeText={(t) => {
+                    if (/^#[0-9A-Fa-f]{0,6}$/.test(t)) setSelectedColor(t);
+                  }}
+                  maxLength={7}
+                />
+              </View>
+            </View>
+
+            {/* Field: Dynamic Tag Chips */}
+            <View style={styles.singleField}>
               <View style={styles.fieldHeader}>
                 <Text style={styles.fieldLabel}>Dynamic Tag Chips</Text>
                 <CodeBtn id="tags" />
@@ -1610,144 +1599,142 @@ ${JSON.stringify(payload, null, 2)}
                 <Pressable onPress={handleAddTag} style={styles.tagAddSmBtn}>
                   <Text style={styles.tagAddSmTxt}>Add</Text>
                 </Pressable>
-                <View style={styles.tagBadgesSmRow}>
-                  {tags.map((t, idx) => (
-                    <View key={idx} style={styles.tagBadgeSm}>
-                      <Text style={styles.tagBadgeSmTxt}>#{t}</Text>
-                      <Pressable onPress={() => setTags(tags.filter((_, i) => i !== idx))}>
-                        <Feather name="x" size={11} color={NavyPalette.textNavy} />
-                      </Pressable>
-                    </View>
-                  ))}
-                </View>
+              </View>
+              <View style={styles.tagBadgesSmRow}>
+                {tags.map((t, idx) => (
+                  <View key={idx} style={styles.tagBadgeSm}>
+                    <Text style={styles.tagBadgeSmTxt}>#{t}</Text>
+                    <Pressable onPress={() => setTags(tags.filter((_, i) => i !== idx))}>
+                      <Feather name="x" size={11} color={NavyPalette.textNavy} />
+                    </Pressable>
+                  </View>
+                ))}
               </View>
             </View>
           </View>
 
           {/* ================================================================= */}
-          {/* SECTION 5: REAL MEDIA, SIGNATURE & ACTION CONTROLS                */}
+          {/* SECTION 5: REAL MEDIA, SIGNATURE & ACTION CONTROLS (ONE PER LINE) */}
           {/* ================================================================= */}
           <View style={styles.fieldsetCard}>
             <Text style={styles.fieldsetSmallHeading}>Media, Signature & Action Controls</Text>
 
-            {/* Real File Upload + Real Photo Picker */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>File Picker</Text>
-                  <CodeBtn id="file" />
-                </View>
-                {attachedFile ? (
-                  <View style={styles.fileMiniCard}>
-                    <Feather name="file-text" size={16} color={NavyPalette.navyDeep} />
-                    <View style={styles.flex1}>
-                      <Text style={styles.fileMiniName} numberOfLines={1}>
-                        {attachedFile.name}
-                      </Text>
-                      <Text style={styles.fileMiniMeta}>{attachedFile.size}</Text>
-                    </View>
-                    <Pressable
-                      onPress={() => {
-                        setAttachedFile(null);
-                        if (fileInputRef.current) fileInputRef.current.value = '';
-                      }}>
-                      <Feather name="trash-2" size={13} color={NavyPalette.error} />
-                    </Pressable>
-                  </View>
-                ) : (
-                  <Pressable
-                    onPress={() => fileInputRef.current?.click()}
-                    style={styles.fileDropSm}>
-                    <Feather name="upload" size={13} color={NavyPalette.textNavy} />
-                    <Text style={styles.fileDropSmTxt}>Choose Document</Text>
-                  </Pressable>
-                )}
+            {/* Field: File Picker */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>File Picker</Text>
+                <CodeBtn id="file" />
               </View>
-
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Image Photo Picker</Text>
-                  <CodeBtn id="imagePicker" />
-                </View>
-                {attachedPhoto ? (
-                  <View style={styles.photoMiniCard}>
-                    <Image
-                      source={{ uri: attachedPhoto.uri }}
-                      style={styles.photoThumbImg}
-                      resizeMode="cover"
-                    />
-                    <View style={styles.flex1}>
-                      <Text style={styles.fileMiniName} numberOfLines={1}>
-                        {attachedPhoto.name}
-                      </Text>
-                      <Text style={styles.fileMiniMeta}>{attachedPhoto.size || 'Image'}</Text>
-                    </View>
-                    <Pressable
-                      onPress={() => {
-                        setAttachedPhoto(null);
-                        if (photoInputRef.current) photoInputRef.current.value = '';
-                      }}>
-                      <Feather name="x" size={13} color={NavyPalette.error} />
-                    </Pressable>
+              {attachedFile ? (
+                <View style={styles.fileMiniCard}>
+                  <Feather name="file-text" size={16} color={NavyPalette.navyDeep} />
+                  <View style={styles.flex1}>
+                    <Text style={styles.fileMiniName} numberOfLines={1}>
+                      {attachedFile.name}
+                    </Text>
+                    <Text style={styles.fileMiniMeta}>{attachedFile.size}</Text>
                   </View>
-                ) : (
                   <Pressable
-                    onPress={() => photoInputRef.current?.click()}
-                    style={styles.fileDropSm}>
-                    <Feather name="camera" size={13} color={NavyPalette.textNavy} />
-                    <Text style={styles.fileDropSmTxt}>Choose Photo</Text>
+                    onPress={() => {
+                      setAttachedFile(null);
+                      if (fileInputRef.current) fileInputRef.current.value = '';
+                    }}>
+                    <Feather name="trash-2" size={13} color={NavyPalette.error} />
                   </Pressable>
-                )}
-              </View>
+                </View>
+              ) : (
+                <Pressable
+                  onPress={() => fileInputRef.current?.click()}
+                  style={styles.fileDropSm}>
+                  <Feather name="upload" size={13} color={NavyPalette.textNavy} />
+                  <Text style={styles.fileDropSmTxt}>Choose Document</Text>
+                </Pressable>
+              )}
             </View>
 
-            {/* Signature Input Pad + Hidden State Inspector */}
-            <View style={styles.pairedRow}>
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>Signature Input Pad</Text>
-                  <CodeBtn id="signature" />
-                </View>
-                <View style={styles.signaturePadBox}>
-                  <View style={styles.sigCenter}>
-                    <Text style={styles.sigTxt}>{isSigned ? 'Eleanor Vance ✓' : 'Tap to Sign'}</Text>
+            {/* Field: Image Photo Picker */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Image Photo Picker</Text>
+                <CodeBtn id="imagePicker" />
+              </View>
+              {attachedPhoto ? (
+                <View style={styles.photoMiniCard}>
+                  <Image
+                    source={{ uri: attachedPhoto.uri }}
+                    style={styles.photoThumbImg}
+                    resizeMode="cover"
+                  />
+                  <View style={styles.flex1}>
+                    <Text style={styles.fileMiniName} numberOfLines={1}>
+                      {attachedPhoto.name}
+                    </Text>
+                    <Text style={styles.fileMiniMeta}>{attachedPhoto.size || 'Image'}</Text>
                   </View>
                   <Pressable
-                    onPress={() => setIsSigned(!isSigned)}
-                    style={styles.sigToggleBtn}>
-                    <Text style={styles.sigToggleTxt}>{isSigned ? 'Clear' : 'Sign'}</Text>
+                    onPress={() => {
+                      setAttachedPhoto(null);
+                      if (photoInputRef.current) photoInputRef.current.value = '';
+                    }}>
+                    <Feather name="x" size={13} color={NavyPalette.error} />
                   </Pressable>
                 </View>
-              </View>
+              ) : (
+                <Pressable
+                  onPress={() => photoInputRef.current?.click()}
+                  style={styles.fileDropSm}>
+                  <Feather name="camera" size={13} color={NavyPalette.textNavy} />
+                  <Text style={styles.fileDropSmTxt}>Choose Photo</Text>
+                </Pressable>
+              )}
+            </View>
 
-              <View style={styles.halfField}>
-                <View style={styles.fieldHeader}>
-                  <Text style={styles.fieldLabel}>&lt;input type="hidden"&gt;</Text>
-                  <CodeBtn id="hidden" />
+            {/* Field: Signature Input Pad */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Signature Input Pad</Text>
+                <CodeBtn id="signature" />
+              </View>
+              <View style={styles.signaturePadBox}>
+                <View style={styles.sigCenter}>
+                  <Text style={styles.sigTxt}>{isSigned ? 'Eleanor Vance ✓' : 'Tap to Sign'}</Text>
                 </View>
                 <Pressable
-                  onPress={() => setShowHidden(!showHidden)}
-                  style={styles.hiddenMiniBtn}>
-                  <Feather name={showHidden ? 'eye-off' : 'eye'} size={13} color={NavyPalette.textNavy} />
-                  <Text style={styles.hiddenMiniTxt}>
-                    {showHidden ? 'Hide Meta' : 'Inspect Token'}
-                  </Text>
+                  onPress={() => setIsSigned(!isSigned)}
+                  style={styles.sigToggleBtn}>
+                  <Text style={styles.sigToggleTxt}>{isSigned ? 'Clear' : 'Sign'}</Text>
                 </Pressable>
-                {showHidden && (
-                  <Text style={styles.hiddenCodeTxt}>
-                    {hiddenMeta.sessionUuid} • {hiddenMeta.csrfToken.slice(0, 8)}...
-                  </Text>
-                )}
               </View>
             </View>
 
-            {/* React Native Touchables Row */}
-            <View style={styles.touchablesContainer}>
+            {/* Field: Hidden State */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>&lt;input type="hidden"&gt;</Text>
+                <CodeBtn id="hidden" />
+              </View>
+              <Pressable
+                onPress={() => setShowHidden(!showHidden)}
+                style={styles.hiddenMiniBtn}>
+                <Feather name={showHidden ? 'eye-off' : 'eye'} size={13} color={NavyPalette.textNavy} />
+                <Text style={styles.hiddenMiniTxt}>
+                  {showHidden ? 'Hide Meta' : 'Inspect Token'}
+                </Text>
+              </Pressable>
+              {showHidden && (
+                <Text style={styles.hiddenCodeTxt}>
+                  {hiddenMeta.sessionUuid} • {hiddenMeta.csrfToken.slice(0, 8)}...
+                </Text>
+              )}
+            </View>
+
+            {/* Field: React Native Touchables */}
+            <View style={styles.singleField}>
               <View style={styles.fieldHeader}>
                 <Text style={styles.fieldLabel}>React Native Touchables</Text>
                 <CodeBtn id="touchables" />
               </View>
-              <View style={styles.actionBtnRowSm}>
+              <View style={styles.touchablesStack}>
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => showToast('TouchableOpacity activated!')}
@@ -1764,26 +1751,32 @@ ${JSON.stringify(payload, null, 2)}
               </View>
             </View>
 
-            {/* Secondary Action Buttons Row (<button type="button">, <input type="image">) */}
-            <View style={styles.actionBtnRowSm}>
-              <Pressable
-                onPress={() => showToast('Button clicked: Action valid!')}
-                style={styles.actionBtnSm}>
-                <Feather name="check" size={13} color={NavyPalette.textNavy} />
-                <Text style={styles.actionBtnSmTxt}>&lt;button type="button"&gt;</Text>
-              </Pressable>
+            {/* Field: Action Buttons */}
+            <View style={styles.singleField}>
+              <View style={styles.fieldHeader}>
+                <Text style={styles.fieldLabel}>Secondary Buttons</Text>
+                <CodeBtn id="button" />
+              </View>
+              <View style={styles.actionButtonsStack}>
+                <Pressable
+                  onPress={() => showToast('Button clicked: Action valid!')}
+                  style={styles.actionBtnSm}>
+                  <Feather name="check" size={13} color={NavyPalette.textNavy} />
+                  <Text style={styles.actionBtnSmTxt}>&lt;button type="button"&gt;</Text>
+                </Pressable>
 
-              <Pressable onPress={handleSubmit} style={styles.actionBtnSm}>
-                <Ionicons name="image" size={13} color={NavyPalette.textNavy} />
-                <Text style={styles.actionBtnSmTxt}>&lt;input type="image"&gt;</Text>
-              </Pressable>
+                <Pressable onPress={handleSubmit} style={styles.actionBtnSm}>
+                  <Ionicons name="image" size={13} color={NavyPalette.textNavy} />
+                  <Text style={styles.actionBtnSmTxt}>&lt;input type="image"&gt;</Text>
+                </Pressable>
 
-              <Pressable onPress={handleReset} style={styles.actionBtnSm}>
-                <Feather name="rotate-ccw" size={13} color={NavyPalette.error} />
-                <Text style={[styles.actionBtnSmTxt, { color: NavyPalette.error }]}>
-                  &lt;button type="reset"&gt;
-                </Text>
-              </Pressable>
+                <Pressable onPress={handleReset} style={styles.actionBtnSm}>
+                  <Feather name="rotate-ccw" size={13} color={NavyPalette.error} />
+                  <Text style={[styles.actionBtnSmTxt, { color: NavyPalette.error }]}>
+                    &lt;button type="reset"&gt;
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           </View>
 
@@ -2078,14 +2071,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 
-  // Fieldset Cards & Grouping
+  // Fieldset Cards & One-Per-Line Grouping
   fieldsetCard: {
     backgroundColor: NavyPalette.baseWhite,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
     padding: Spacing.three,
-    gap: Spacing.three,
+    gap: 14,
   },
   fieldsetSmallHeading: {
     fontFamily: Fonts.bold,
@@ -2096,24 +2089,8 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
 
-  // Paired Layouts
-  pairedRow: {
-    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
-    gap: 10,
-  },
-  halfField: {
-    flex: 1,
-    gap: 4,
-  },
-  threeWayRow: {
-    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
-    gap: 8,
-  },
-  thirdField: {
-    flex: 1,
-    gap: 4,
-  },
-  fullWidthField: {
+  // Pure 1 Per Line Field Item
+  singleField: {
     width: '100%',
     gap: 4,
   },
@@ -2155,6 +2132,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 38,
     gap: 8,
+    width: '100%',
   },
   inputBoxReadOnly: {
     backgroundColor: '#F8FAFC',
@@ -2212,25 +2190,24 @@ const styles = StyleSheet.create({
     color: NavyPalette.textNavy,
   },
 
-  // OTP Mini
-  otpCompactRow: {
+  // OTP 1 Per Line Row
+  otpRowFull: {
     flexDirection: 'row',
-    gap: 4,
+    gap: 8,
     width: '100%',
-    justifyContent: 'space-between',
+    maxWidth: 320,
   },
-  otpMiniCell: {
+  otpCellOneLine: {
     flex: 1,
     minWidth: 0,
-    maxWidth: 44,
-    height: 38,
+    height: 40,
     backgroundColor: NavyPalette.surfaceLight,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
     textAlign: 'center',
     fontFamily: Fonts.bold,
-    fontSize: 15,
+    fontSize: 16,
     color: NavyPalette.textNavy,
   },
 
@@ -2240,8 +2217,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
-    padding: 6,
-    height: 52,
+    padding: 8,
+    height: 64,
   },
   textareaMiniInput: {
     flex: 1,
@@ -2287,11 +2264,11 @@ const styles = StyleSheet.create({
   multiSelectPills: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 4,
+    gap: 6,
   },
   skillChip: {
-    paddingVertical: 4,
-    paddingHorizontal: 7,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
     backgroundColor: NavyPalette.surfaceLight,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
@@ -2303,7 +2280,7 @@ const styles = StyleSheet.create({
   },
   skillChipTxt: {
     fontFamily: Fonts.medium,
-    fontSize: 10,
+    fontSize: 11,
     color: NavyPalette.textSecondary,
   },
   skillChipTxtActive: {
@@ -2313,14 +2290,14 @@ const styles = StyleSheet.create({
 
   // Radio Mini
   radioPillGroup: {
-    gap: 4,
+    gap: 6,
   },
   radioCompactPill: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    paddingVertical: 5,
-    paddingHorizontal: 8,
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     backgroundColor: NavyPalette.surfaceLight,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
@@ -2347,7 +2324,7 @@ const styles = StyleSheet.create({
   },
   radioPillTxt: {
     fontFamily: Fonts.medium,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.textSecondary,
   },
   radioPillTxtActive: {
@@ -2366,7 +2343,7 @@ const styles = StyleSheet.create({
   },
   segmentBtnSm: {
     flex: 1,
-    paddingVertical: 6,
+    paddingVertical: 8,
     alignItems: 'center',
     borderRadius: BorderRadius, // Strict 3px
   },
@@ -2377,7 +2354,7 @@ const styles = StyleSheet.create({
   },
   segmentTxtSm: {
     fontFamily: Fonts.medium,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.textSecondary,
   },
   segmentTxtSmActive: {
@@ -2385,7 +2362,7 @@ const styles = StyleSheet.create({
     color: NavyPalette.navyDeep,
   },
 
-  // Checkbox & Switch Mini
+  // Checkbox & Switch
   checkboxCompactRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -2406,7 +2383,7 @@ const styles = StyleSheet.create({
   },
   checkboxCompactTxt: {
     fontFamily: Fonts.medium,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.textNavy,
   },
   switchCompactRow: {
@@ -2417,7 +2394,7 @@ const styles = StyleSheet.create({
   },
   switchCompactTxt: {
     fontFamily: Fonts.medium,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.textNavy,
   },
 
@@ -2433,7 +2410,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   stepperBtnSm: {
-    width: 38,
+    width: 44,
     height: 38,
     justifyContent: 'center',
     alignItems: 'center',
@@ -2458,7 +2435,7 @@ const styles = StyleSheet.create({
   sliderInteractiveRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 12,
     height: 38,
   },
   sliderBarSmBg: {
@@ -2474,13 +2451,13 @@ const styles = StyleSheet.create({
   },
   sliderLiveBadge: {
     backgroundColor: NavyPalette.navyDeep,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderRadius: BorderRadius,
   },
   sliderLiveBadgeTxt: {
     fontFamily: Fonts.bold,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.baseWhite,
   },
 
@@ -2490,24 +2467,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: NavyPalette.navyDeep,
     borderRadius: BorderRadius, // Strict 3px
-    padding: 6,
-    height: 38,
+    padding: 8,
+    height: 48,
     justifyContent: 'center',
   },
   outputMiniFormula: {
     fontFamily: Fonts.mono,
-    fontSize: 9,
+    fontSize: 10,
     color: NavyPalette.textSecondary,
   },
   outputMiniValue: {
     fontFamily: Fonts.bold,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.navyDeep,
+    marginTop: 2,
   },
 
   // Meter Mini
   meterBarSmBg: {
-    height: 7,
+    height: 8,
     backgroundColor: NavyPalette.surfaceSubtle,
     borderRadius: BorderRadius, // Strict 3px
     borderWidth: 1,
@@ -2527,39 +2505,39 @@ const styles = StyleSheet.create({
   },
   meterMiniLabel: {
     fontFamily: Fonts.mono,
-    fontSize: 9,
+    fontSize: 10,
     color: NavyPalette.textSecondary,
-    marginTop: 2,
+    marginTop: 4,
   },
 
   // Stars & Colors
   starRowSm: {
     flexDirection: 'row',
-    gap: 2,
+    gap: 4,
     alignItems: 'center',
     height: 38,
   },
   colorPickerInteractiveRow: {
     flexDirection: 'row',
-    gap: 6,
+    gap: 8,
     alignItems: 'center',
     height: 38,
   },
   colorHexInput: {
     fontFamily: Fonts.mono,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.textNavy,
     backgroundColor: NavyPalette.surfaceLight,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius,
-    paddingHorizontal: 6,
-    height: 28,
-    width: 72,
+    paddingHorizontal: 8,
+    height: 38,
+    width: 90,
   },
   colorMiniDot: {
-    width: 28,
-    height: 28,
+    width: 38,
+    height: 38,
     borderRadius: BorderRadius, // Strict 3px
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
@@ -2573,21 +2551,21 @@ const styles = StyleSheet.create({
   },
   tagAddSmBtn: {
     backgroundColor: NavyPalette.navyDeep,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     height: 38,
     justifyContent: 'center',
     borderRadius: BorderRadius, // Strict 3px
   },
   tagAddSmTxt: {
     fontFamily: Fonts.bold,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.baseWhite,
   },
   tagBadgesSmRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 4,
-    flex: 1,
+    gap: 6,
+    marginTop: 6,
   },
   tagBadgeSm: {
     flexDirection: 'row',
@@ -2596,13 +2574,13 @@ const styles = StyleSheet.create({
     backgroundColor: NavyPalette.surfaceLight,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
-    paddingVertical: 2,
-    paddingHorizontal: 6,
+    paddingVertical: 3,
+    paddingHorizontal: 8,
     borderRadius: BorderRadius, // Strict 3px
   },
   tagBadgeSmTxt: {
     fontFamily: Fonts.medium,
-    fontSize: 10,
+    fontSize: 11,
     color: NavyPalette.textNavy,
   },
 
@@ -2614,35 +2592,35 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
-    paddingHorizontal: 8,
-    height: 42,
-    gap: 8,
+    paddingHorizontal: 10,
+    height: 44,
+    gap: 10,
   },
   fileMiniName: {
     fontFamily: Fonts.medium,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.textNavy,
   },
   fileMiniMeta: {
     fontFamily: Fonts.mono,
-    fontSize: 9,
+    fontSize: 10,
     color: NavyPalette.textSecondary,
   },
   fileDropSm: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
+    gap: 8,
     backgroundColor: NavyPalette.surfaceLight,
     borderWidth: 1,
     borderStyle: 'dashed',
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
-    height: 42,
+    height: 44,
   },
   fileDropSmTxt: {
     fontFamily: Fonts.medium,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.textNavy,
   },
   photoMiniCard: {
@@ -2652,13 +2630,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
-    paddingHorizontal: 8,
-    height: 42,
-    gap: 8,
+    paddingHorizontal: 10,
+    height: 44,
+    gap: 10,
   },
   photoThumbImg: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     borderRadius: BorderRadius,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
@@ -2672,20 +2650,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
-    height: 38,
-    paddingHorizontal: 8,
+    height: 44,
+    paddingHorizontal: 10,
   },
   sigCenter: {
     flex: 1,
   },
   sigTxt: {
     fontFamily: Fonts.medium,
-    fontSize: 12,
+    fontSize: 13,
     color: NavyPalette.textNavy,
   },
   sigToggleBtn: {
-    paddingVertical: 2,
-    paddingHorizontal: 6,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     backgroundColor: NavyPalette.baseWhite,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
@@ -2693,7 +2671,7 @@ const styles = StyleSheet.create({
   },
   sigToggleTxt: {
     fontFamily: Fonts.bold,
-    fontSize: 10,
+    fontSize: 11,
     color: NavyPalette.textNavy,
   },
 
@@ -2701,29 +2679,30 @@ const styles = StyleSheet.create({
   hiddenMiniBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: 8,
     backgroundColor: NavyPalette.surfaceLight,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
     height: 38,
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
   },
   hiddenMiniTxt: {
     fontFamily: Fonts.medium,
-    fontSize: 11,
+    fontSize: 12,
     color: NavyPalette.textNavy,
   },
   hiddenCodeTxt: {
     fontFamily: Fonts.mono,
-    fontSize: 9,
+    fontSize: 10,
     color: NavyPalette.textSecondary,
-    marginTop: 2,
+    marginTop: 4,
   },
 
   // Touchables & Action Buttons Row
-  touchablesContainer: {
-    gap: 4,
+  touchablesStack: {
+    flexDirection: 'row',
+    gap: 8,
   },
   touchableBtnSm: {
     flex: 1,
@@ -2733,34 +2712,35 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
-    paddingVertical: 8,
+    paddingVertical: 10,
   },
-  actionBtnRowSm: {
+  actionButtonsStack: {
     flexDirection: 'row',
-    gap: 6,
+    gap: 8,
   },
   actionBtnSm: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 4,
+    gap: 6,
     backgroundColor: NavyPalette.surfaceLight,
     borderWidth: 1,
     borderColor: NavyPalette.navyBorder,
     borderRadius: BorderRadius, // Strict 3px
-    paddingVertical: 8,
+    paddingVertical: 10,
   },
   actionBtnSmTxt: {
     fontFamily: Fonts.mono,
-    fontSize: 10,
+    fontSize: 11,
     color: NavyPalette.textNavy,
   },
 
   // Primary Submit
   submitSection: {
-    gap: 6,
+    gap: 8,
     alignItems: 'center',
+    marginTop: 8,
   },
   submitTopAffordance: {
     alignSelf: 'flex-end',
